@@ -2,7 +2,7 @@
 
 Authentication is a basic feature of most Web Applications, so we, [at Flexper](https://flexper.hashnode.dev/), decided to make a library to simplify how to implement it inside our NextJS applications.
 
-In this article we will walk through the basic settings of our library [next-protected-auth](https://github.com/flexper/next-protected-auth) for user authentication by creating two routes to create a simple proof of concept, a public one '**/'** and a protected one, '**/protected'**, only available if a user is logged**.**
+In this article we will walk through the basic settings of our library [next-protected-auth](https://github.com/flexper/next-protected-auth) for user authentication by creating two routes to create a simple proof of concept, a public one '**/'** and a protected one, '**/protected'**, only available if a user is logged.
 
 # Install
 
@@ -78,10 +78,10 @@ In the *\_app.tsx* file above, we worked with the *'useNextAuthProtectedHandler'
 
 > It is good practice to have **both an accessToken and a refreshToken**.
 
-The **accessToken** is used to **make all the API calls** of the application to the server and **should not have a great lifespan** as we want to prevent bad intended people to sniff and use its value for wrong purposes. Something like a day.
+The **accessToken** is used to **make all the API calls** of the application to the server and **should not have a great lifespan** as we want to prevent bad intended people to sniff and use its value for wrong purposes. Something like a day. With *next-protected-app*, the **accessToken** is stored inside **localStorage.**
 
 The **refreshToken** on the other hand **serves to refresh the value of accessToken** without the user having to log in again, its lifespan is more something like a week, and after its expiration, the user will have to log in manually again.
-With *next-protected-app*, the **refreshToken** is stored inside **localStorage**, it does not transit through every API request like the accessToken, yet it's good practice to make the user renew it once in a while.
+With *next-protected-app*, the **refreshToken** is stored inside **a cookie**, it does not transit through every API request like the accessToken, yet it's good practice to make the user renew it once in a while.
 
 In order to refresh the **accessToken** of a user, we simply make a request to our server *(http://my-api.io)* with the **credentials** option to also pass cookies to the server.
 
@@ -194,7 +194,7 @@ You are completely free to design how the page for **login and signup** should l
 
 # Signout
 
-The signout route is pretty straightforward as it just needs to unload the accessToken from our NextAuthProvider*.*
+The signout route is pretty straightforward as it just needs to unload the accessToken from our NextAuthProvider\*.\*
 
 After a user landed on the page, we call the **logout** function from our myAPI wrapper and then redirect the user to the sign-in process through our */auth/signin* route.
 
